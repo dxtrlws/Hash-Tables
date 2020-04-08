@@ -54,7 +54,7 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        self.storage[key] = self._hash(value)
 
 
 
@@ -87,7 +87,13 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        self.capacity *= 2
+        new_storage = [None] * len(self.capacity)
+
+        for i in range(len(self.capacity)):
+            new_storage[i] = self.storage[i]
+        
+        self.storage = new_storage
 
 
 
