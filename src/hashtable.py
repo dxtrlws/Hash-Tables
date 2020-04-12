@@ -54,15 +54,15 @@ class HashTable:
 
         Fill this in.
         '''
-
+        # take the key and value and put it somewhere in the array
+        # get index for the key
         index = self._hash_mod(key)
-        node = self.storage[index]
-        if node is None:
-            self.storage[index] = value
-        else:
-            print(f'Collision warning')
+        if self.storage[index] is not None:
+            print(f'Warn: Collision detected for {key}')
+        
+        self.storage[index] = LinkedPair(key, value)
 
-
+      
     def remove(self, key):
         '''
         Remove the value stored with the given key.
@@ -87,12 +87,10 @@ class HashTable:
         Fill this in.
         '''
         index = self._hash_mod(key)
-        
-
-        if index is not None:
-            return self.storage[index]
-        else:
+        if self.storage[index] is None:
             return None
+        return self.storage[index].value
+   
 
     def resize(self):
         '''
@@ -101,19 +99,16 @@ class HashTable:
 
         Fill this in.
         '''
-        # self.capacity *= 2
-        # new_storage = [None] * self.capacity
-
-        # for i in range(self.capacity):
-        #     new_storage[i] = self.storage[i]
-
-        # self.storage = new_storage
-        new_storage = self.storage.copy()
-        self.capacity = self.capacity * 2
+        old_storage = self.storage
+        self.capacity *= 2
+        # create new array
         self.storage = [None] * self.capacity
+        # move all values over
+        for pair in old_storage:
+            # re-insert each key/value
+            self.insert(pair.key, pair.value)
         
-        for i in new_storage:
-            new_storage[i] = self.storage[i]
+       
 
 
 if __name__ == "__main__":
