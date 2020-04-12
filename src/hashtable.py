@@ -155,12 +155,14 @@ class HashTable:
         # for pair in old_storage:
             # re-insert each key/value
             # self.insert(pair.key, pair.value)
-        # old_storage = self.storage
-        # for item in old_storage:
-        #     curr_item = item
-        #     while curr_item is not None:
-        #         self.insert(curr_item.key, curr_item.value)
-        #         curr_item = curr_item.next
+        old_storage = self.storage
+        self.capacity *= 2
+        self.storage = [None] * self.capacity
+        for item in old_storage:
+            curr_item = item
+            while curr_item is not None:
+                self.insert(curr_item.key, curr_item.value)
+                curr_item = curr_item.next
         
        
 
